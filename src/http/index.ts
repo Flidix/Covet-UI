@@ -23,10 +23,10 @@ $api.interceptors.response.use((config) => {
         originalRequest._isRetry = true;
         try {
             const refreshToken = localStorage.getItem('refreshToken')
-            const response = await $api.post<AuthResponse>(`${API_URL}auth/access-token`, {refreshToken})
+            const response = await $api.post<AuthResponse>(`${API_URL}auth/access-token`, { refreshToken })
             console.log(response.data)
-            localStorage.setItem('accessToken', response.data.accessToken) 
-            localStorage.setItem('refreshToken', response.data.refreshToken) 
+            localStorage.setItem('accessToken', response.data.accessToken)
+            localStorage.setItem('refreshToken', response.data.refreshToken)
         } catch (e) {
             console.log('not auth')
         }

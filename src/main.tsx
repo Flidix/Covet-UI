@@ -1,25 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import App from './App';
-import AuthStore from './store/AuthStore';
-import { createContext } from 'react';
+import { Provider } from 'react-redux';
+import { setupStore } from './store/store';
 
-interface State {
-  auth: AuthStore;
-}
+const store = setupStore();
 
-export const auth = new AuthStore();
-
-export const Context = createContext<State>({
-  auth
-});
-
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <Context.Provider value={{
-      auth
-    }}>
-      <App />
-    </Context.Provider>
-  </React.StrictMode>
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root'),
 );

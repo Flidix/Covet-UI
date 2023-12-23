@@ -1,18 +1,20 @@
-import { FC, useContext, useEffect } from "react"
-import { Context } from "../../main"
+import { FC, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { mainRoutesEnum } from "../../utils/routes";
+import { mainRoutesEnum } from '../../utils/routes';
 import { observer } from 'mobx-react-lite';
+import { useAppDispatch } from '../../hooks/redux';
+import { fetchConfirmAuth } from '../../store/reducers/auth/AuthService';
 
 const ConfirmUser: FC = () => {
 
-  const {auth} = useContext(Context)
-  const {id} = useParams()
+  const dispatch = useAppDispatch()
+
+  const { id } = useParams()
   const navigate = useNavigate()
 
   useEffect(() => {
     if (id) {
-      auth.confirm(id);
+      dispatch(fetchConfirmAuth({ id }))
       navigate(mainRoutesEnum.MAIN)
     }
   }, [id])
