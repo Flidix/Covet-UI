@@ -1,7 +1,7 @@
-import ConfirmUser from "../pages/auth/ConfirmUserPage";
-import LoginPage from "../pages/auth/login/LoginPage";
-import RegisterPage from "../pages/auth/register/RegisterPage";
-import MainPage from "../pages/main/MainPage";
+import ConfirmUser from '../pages/auth/ConfirmUserPage';
+import LoginPage from '../pages/auth/login/LoginPage';
+import RegisterPage from '../pages/auth/register/RegisterPage';
+import MainPage from '../pages/main/MainPage';
 
 export enum authRoutesEnum {
     LOGIN = 'login',
@@ -19,12 +19,12 @@ export const publicRoutes = [
     {
         path: authRoutesEnum.LOGIN,
         exact: true,
-        Component: LoginPage 
+        Component: LoginPage
     },
     {
         path: authRoutesEnum.REGISTER,
         exact: true,
-        Component: RegisterPage 
+        Component: RegisterPage
     },
     {
         path: authRoutesEnum.CONFIRM,

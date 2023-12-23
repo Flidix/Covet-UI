@@ -1,5 +1,5 @@
-import {ICours} from "../cours/ICours";
-import {IUser} from "./IUser";
+import { ICours } from '../cours/ICours';
+import { IUser } from './IUser';
 
 export interface ILike {
     fromUser: IUser;

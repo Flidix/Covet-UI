@@ -1,22 +1,25 @@
-import { BrowserRouter } from "react-router-dom"
+import { BrowserRouter } from 'react-router-dom'
 import AppRouter from './components/AppRouter';
-import { useContext, useEffect } from "react";
-import { Context } from "./main";
+import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
+import { useAppDispatch, useAppSelector } from './hooks/redux';
+import { fetchCheckAuth } from './store/reducers/auth/AuthService';
 
 function App() {
 
-  const {auth} = useContext(Context)
+  const { isLoading } = useAppSelector(state => state.confirmAuthReducer)
+
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (localStorage.getItem('refreshToken')) {
-      auth.checkAuth()
+      dispatch(fetchCheckAuth())
     }
   }, [])
 
   return (
     <div className="app">
-      {auth.isLoading
+      {isLoading
         ? <div></div>
         :
         <BrowserRouter>

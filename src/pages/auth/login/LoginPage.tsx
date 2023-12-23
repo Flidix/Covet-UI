@@ -1,35 +1,36 @@
-import { useContext, useState } from "react"
-import { Context } from "../../../main"
+import { useState } from 'react'
 import { observer } from 'mobx-react-lite';
+import { useAppDispatch } from '../../../hooks/redux';
+import { fetchLogin } from '../../../store/reducers/auth/AuthService';
 
 const LoginPage = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [username, setUsername] = useState<string>('')
 
-    const {auth} = useContext(Context)
+    const dispatch = useAppDispatch()
 
     return (
         <div>
-            <input 
-                type="text" 
+            <input
+                type="text"
                 value={email}
                 placeholder='email'
                 onChange={(e) => setEmail(e.target.value)}
             />
-            <input 
-                type="password" 
+            <input
+                type="password"
                 placeholder='password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <input 
-                type="username" 
+            <input
+                type="username"
                 placeholder='username'
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
             />
-            <button onClick={() => auth.login(email, username, password)}>login</button> 
+            <button onClick={() => dispatch(fetchLogin({ email, username, password }))}>login</button>
         </div>
 
     )

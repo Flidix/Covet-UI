@@ -1,17 +1,16 @@
-import { FC, useContext } from "react"
-import { Context } from "../main"
-import { Navigate, Route, Routes } from "react-router-dom"
-import { authRoutesEnum, mainRoutesEnum, privateRoutes, publicRoutes } from "../utils/routes"
+import { FC } from 'react'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { authRoutesEnum, mainRoutesEnum, privateRoutes, publicRoutes } from '../utils/routes'
 import { observer } from 'mobx-react-lite';
+import { useAppSelector } from '../hooks/redux';
 
 const AppRouter: FC = () => {
 
-    const {auth} = useContext(Context)
+    const { isAuth } = useAppSelector(state => state.confirmAuthReducer)
 
-    console.log(auth.isAuth);
-    
+    console.log(isAuth,111)
     return (
-        auth.isAuth
+        isAuth
         ? (
             <Routes>
                 {privateRoutes.map((route) => (
@@ -42,7 +41,7 @@ const AppRouter: FC = () => {
                 path="*"
                 element={<Navigate to={authRoutesEnum.LOGIN} replace />}
             />
-        </Routes> 
+        </Routes>
     )
 }
 
