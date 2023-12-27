@@ -1,5 +1,5 @@
-import { IUser } from "../user/user";
-import { IGroup } from "./group";
+import { IUser } from '../user/user';
+import { IGroup } from './group';
 
 export interface IUserToGroups {
     user: IUser;

@@ -1,9 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { IGroup } from '../../../../models/group/group'
+import { IUserToGroups } from '../../../../models/group/userToGroups'
 
 interface GroupsState {
-    createCgroup: IGroup[]
-    groups: IGroup[]
+    createCgroup: IUserToGroups[]
+    groups: IUserToGroups[]
     isLoading: boolean
     error: string
 }
@@ -20,7 +21,7 @@ export const groupsSlice = createSlice({
     initialState,
     reducers: {
 
-        createGroup(state, action: PayloadAction<IGroup>) {
+        createGroup(state, action: PayloadAction<IUserToGroups>) {
             state.isLoading = false
             state.error = ''
             state.createCgroup.push(action.payload)
@@ -31,7 +32,7 @@ export const groupsSlice = createSlice({
         groupsFetching(state) {
             state.isLoading = true
         },
-        groupsFetchingSuccess(state, action: PayloadAction<IGroup[]>) {
+        groupsFetchingSuccess(state, action: PayloadAction<IUserToGroups[]>) {
             state.isLoading = false
             state.error = ''
             state.groups = action.payload
