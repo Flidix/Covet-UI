@@ -1,8 +1,13 @@
 import axios from 'axios';
 import { AuthResponse } from '../models/responses/authResponse';
+import { io, Socket } from 'socket.io-client';
+
 
 
 export const API_URL = 'http://localhost:8000/api/'
+export const SOCKET_API_URL = 'http://localhost:3001/'
+
+
 
 const $api = axios.create({
     withCredentials: true,
@@ -33,5 +38,12 @@ $api.interceptors.response.use((config) => {
     }
     throw error;
 })
+
+export const $socket = io(SOCKET_API_URL, {
+    withCredentials: true,
+    extraHeaders: {
+      authorization: `${localStorage.getItem('accessToken')}`,
+    },
+});
 
 export default $api;
