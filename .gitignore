@@ -19,7 +19,6 @@ dist-ssr
 .DS_Store
 .eslintrc.cjs
 .env
-yarn.lock
 *.suo
 *.ntvs*
 *.njsproj
