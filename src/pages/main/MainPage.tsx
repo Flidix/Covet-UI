@@ -15,8 +15,6 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
   const [text, setText] = useState<string>('');
 
   useEffect(() => {
-    console.log(localStorage.getItem('accessToken'));
-
     dispatch(fetchGroups());
   }, [createCgroup]);
 
