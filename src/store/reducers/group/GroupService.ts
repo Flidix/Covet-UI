@@ -5,16 +5,20 @@ import { IUserToGroups } from '../../../models/group/userToGroups';
 import { IGroup } from '../../../models/group/group';
 import { groupSlice } from './slices/GroupSlice';
 
-export const fetchGroups = createAsyncThunk('group/my-groups', async (_, { dispatch }) => {
+export const fetchGroups = createAsyncThunk(
+  'group/my-groups',
+  async (_, { dispatch }) => {
     try {
-        dispatch(groupsSlice.actions.groupsFetching());
-        const response = await $api.get<IUserToGroups[]>('group/my-groups')
-        dispatch(groupsSlice.actions.groupsFetchingSuccess(response.data));
+      dispatch(groupsSlice.actions.groupsFetching());
+      const response = await $api.get<IUserToGroups[]>('group/my-groups');
+      dispatch(groupsSlice.actions.groupsFetchingSuccess(response.data));
     } catch (e) {
-        dispatch(groupsSlice.actions.groupsFetchingError('error'));
+      dispatch(groupsSlice.actions.groupsFetchingError('error'));
     }
-});
+  }
+);
 
+<<<<<<< Updated upstream
 export const fetchGroup = createAsyncThunk('group/:id', async (id: string, { dispatch }) => {
     try {
         dispatch(groupSlice.actions.groupFetching());
@@ -63,4 +67,17 @@ export const createGroup = createAsyncThunk('create', async (name: string, { dis
         dispatch(groupsSlice.actions.groupsFetchingError('error'));
       }
 })
+=======
+export const createGroup = createAsyncThunk(
+  'group/create',
+  async (name: string, { dispatch }) => {
+    try {
+      dispatch(groupsSlice.actions.groupsFetching());
+>>>>>>> Stashed changes
 
+      await $socket.emit('create', { name });
+    } catch (error) {
+      dispatch(groupsSlice.actions.groupsFetchingError('error'));
+    }
+  }
+);

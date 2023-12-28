@@ -1,4 +1,4 @@
-import { IUserToGroups } from "../group/userToGroups"
+import { IUserToGroups } from '../group/userToGroups'
 
 export interface IUser {
     email: string

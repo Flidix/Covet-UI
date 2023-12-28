@@ -1,13 +1,9 @@
 import axios from 'axios';
 import { AuthResponse } from '../models/responses/authResponse';
-import { io, Socket } from 'socket.io-client';
-
-
+import { io } from 'socket.io-client';
 
 export const API_URL = 'http://localhost:8000/api/'
 export const SOCKET_API_URL = 'http://localhost:3001/'
-
-
 
 const $api = axios.create({
     withCredentials: true,
