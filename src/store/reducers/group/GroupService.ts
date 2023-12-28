@@ -2,6 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import $api, { $socket } from '../../../http';
 import { groupsSlice } from './slices/GroupsSlice';
 import { IUserToGroups } from '../../../models/group/userToGroups';
+import { IGroup } from '../../../models/group/group';
+import { groupSlice } from './slices/GroupSlice';
 
 export const fetchGroups = createAsyncThunk('group/my-groups', async (_, { dispatch }) => {
     try {
@@ -13,7 +15,37 @@ export const fetchGroups = createAsyncThunk('group/my-groups', async (_, { dispa
     }
 });
 
-export const createGroup = createAsyncThunk('group/create', async (name: string, { dispatch }) => {
+export const fetchGroup = createAsyncThunk('group/:id', async (id: string, { dispatch }) => {
+    try {
+        dispatch(groupSlice.actions.groupFetching());
+        const response = await $api.get<IGroup>('group/' + id)
+        dispatch(groupSlice.actions.groupFetchingSuccess(response.data));
+    } catch (e) {
+        dispatch(groupSlice.actions.groupFetchingError('error'));
+    }
+});
+
+export const sendMessage = createAsyncThunk('message', async (payload: {message: string, groupId: number}, { dispatch }) => {
+    try {
+
+    dispatch(groupSlice.actions.groupFetching());
+
+    await $socket.emit('message', { message: payload.message, groupId: payload.groupId });
+
+    $socket.on('message', (data: any) => {
+        dispatch(groupSlice.actions.createMessage(data));
+    })
+
+    return () => {
+        $socket.removeListener('message');
+    };
+
+  } catch (error) {
+    dispatch(groupSlice.actions.groupFetchingError('error'));
+  }
+})
+
+export const createGroup = createAsyncThunk('create', async (name: string, { dispatch }) => {
         try {
         dispatch(groupsSlice.actions.groupsFetching());
 
