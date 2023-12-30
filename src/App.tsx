@@ -11,7 +11,6 @@ function App() {
 
   const dispatch = useAppDispatch()
 
-
   useEffect(() => {
     if (localStorage.getItem('refreshToken')) {
       dispatch(fetchCheckAuth())

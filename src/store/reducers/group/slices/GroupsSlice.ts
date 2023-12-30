@@ -29,9 +29,10 @@ export const groupsSlice = createSlice({
             state.isLoading = true
         },
         groupsFetchingSuccess(state, action: PayloadAction<IUserToGroups[]>) {
+            state.groups = []
             state.isLoading = false
             state.error = ''
-            state.groups = [...state.groups, ...action.payload]
+            state.groups = [...state.groups, ...action.payload].reverse()
         },
         groupsFetchingError(state, action: PayloadAction<string>) {
             state.isLoading = false
