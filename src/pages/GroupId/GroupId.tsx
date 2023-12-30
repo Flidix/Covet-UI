@@ -11,7 +11,7 @@ export const GroupId: FC = () => {
 
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
-  const { messages, group, users, createUser } = useAppSelector(state => state.groupReducer);
+  const { messages, users, createUser } = useAppSelector(state => state.groupReducer);
 
   useEffect(() => {
     if (id) {
