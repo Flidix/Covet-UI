@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { fetchGroup, onJoin, sendMessage } from '../../store/reducers/group/GroupService';
+import { fetchGroup, leave, onJoin, sendMessage } from '../../store/reducers/group/GroupService';
 import { $socket } from '../../http';
 import { groupSlice } from '../../store/reducers/group/slices/GroupSlice';
 
@@ -22,6 +22,8 @@ export const GroupId: FC = () => {
 
   useEffect(() => {
     const handleMessage = (data: any) => {
+      console.log(data);
+
       dispatch(groupSlice.actions.createMessage(data));
     };
 
@@ -33,20 +35,19 @@ export const GroupId: FC = () => {
 
   }, [id]);
 
-
   useEffect(() => {
-    const handleOnJoin = (data: any) => {
-      dispatch(groupSlice.actions.onJoin(data));
+    const handleLeave = (data: any) => {
+      dispatch(groupSlice.actions.onLeave(data));
     };
 
-    $socket.on('join', handleOnJoin);
-
-
+    $socket.on('leave', handleLeave);
 
     return () => {
-      $socket.removeListener('join', handleOnJoin);
+      $socket.removeListener('leave', handleLeave);
     };
+
   }, [id])
+
 
   const handleSendMessage = () => {
     if (id) {
@@ -60,6 +61,12 @@ export const GroupId: FC = () => {
       const userId = parseInt(user, 10);
       const groupId = parseInt(id, 10);
       dispatch(onJoin({ userId, groupId }));
+    }
+  }
+
+  const handleOnLeave = () => {
+    if (id) {
+      dispatch(leave({ groupId: parseInt(id, 10) }));
     }
   }
 
@@ -85,6 +92,8 @@ export const GroupId: FC = () => {
 
         <input value={user} onChange={(e) => setUser(e.target.value)} type="text" />
         <button onClick={handleOnJoin}>send</button>
+
+        {id && <button onClick={handleOnLeave}>leave</button>}
       </div>
     </div>
   );

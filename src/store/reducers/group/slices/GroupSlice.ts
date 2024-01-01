@@ -28,10 +28,20 @@ export const groupSlice = createSlice({
     initialState,
     reducers: {
 
+      onLeave(state, action: PayloadAction<{groupId: number, userId: number}>) {
+        state.isLoading = false
+        state.error = ''
+        console.log(state.createUser, state.users, 456789);
+
+        state.createUser = state.createUser.filter((user) =>
+          user.userId !== action.payload.userId && user.groupId !== action.payload.groupId)
+        state.users = state.users.filter((user) => user.userId !== action.payload.userId && user.groupId !== action.payload.groupId)
+      },
       onJoin(state, action: PayloadAction<IUserToGroups>) {
         state.isLoading = false
         state.error = ''
         state.createUser.push(action.payload)
+        state.users.push(action.payload);
       },
       createMessage(state, action: PayloadAction<IMessage>) {
         state.isLoading = false;
@@ -44,6 +54,7 @@ export const groupSlice = createSlice({
       },
       groupFetchingSuccess(state, action: PayloadAction<IGroup>) {
         state.users = [];
+        state.createUser = [];
         state.group = {} as IGroup;
         state.createMessage = [];
         state.messages = [];
