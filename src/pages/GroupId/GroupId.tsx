@@ -22,8 +22,6 @@ export const GroupId: FC = () => {
 
   useEffect(() => {
     const handleMessage = (data: any) => {
-      console.log(data);
-
       dispatch(groupSlice.actions.createMessage(data));
     };
 
