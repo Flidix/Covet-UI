@@ -36,7 +36,9 @@ export const groupSlice = createSlice({
       onJoin(state, action: PayloadAction<IUserToGroups>) {
         state.isLoading = false
         state.error = ''
-        state.users.push(action.payload);
+        if(state.group.id === action.payload.groupId) {
+          state.users.push(action.payload);
+        }
       },
       createMessage(state, action: PayloadAction<IMessage>) {
         state.isLoading = false;

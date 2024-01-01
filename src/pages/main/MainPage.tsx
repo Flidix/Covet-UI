@@ -46,18 +46,29 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
 
   useEffect(() => {
     const handleLeave = (data: ILeaveResponse) => {
-      console.log('Handling leave event:', data);
       dispatch(groupsSlice.actions.onLeave(data));
       dispatch(groupSlice.actions.onLeave(data));
     };
 
-    console.log('Adding leave event listener');
-
     $socket.on('leave', handleLeave);
 
     return () => {
-      console.log('Removing leave event listener');
       $socket.removeListener('leave', handleLeave);
+    };
+
+  }, []);
+
+  useEffect(() => {
+    const handleDelete = (data: ILeaveResponse) => {
+      console.log(data);
+
+      dispatch(groupsSlice.actions.onDelete(data));
+    };
+
+    $socket.on('delete', handleDelete);
+
+    return () => {
+      $socket.removeListener('delete', handleDelete);
     };
 
   }, []);
