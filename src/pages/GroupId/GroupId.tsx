@@ -1,24 +1,27 @@
 import { FC, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { fetchGroup, leave, onJoin, sendMessage } from '../../store/reducers/group/GroupService';
 import { $socket } from '../../http';
 import { groupSlice } from '../../store/reducers/group/slices/GroupSlice';
+import { mainRoutesEnum } from '../../utils/routes';
 
 export const GroupId: FC = () => {
   const [text, setText] = useState<string>('');
   const [user, setUser] = useState<string>('');
 
+  const navigate = useNavigate()
+
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
-  const { messages, users, createUser } = useAppSelector(state => state.groupReducer);
+  const { messages, users } = useAppSelector(state => state.groupReducer);
 
   useEffect(() => {
     if (id) {
       dispatch(fetchGroup(id));
     }
 
-  }, [id, createUser]);
+  }, [id]);
 
   useEffect(() => {
     const handleMessage = (data: any) => {
@@ -33,19 +36,6 @@ export const GroupId: FC = () => {
 
   }, [id]);
 
-  useEffect(() => {
-    const handleLeave = (data: any) => {
-      dispatch(groupSlice.actions.onLeave(data));
-    };
-
-    $socket.on('leave', handleLeave);
-
-    return () => {
-      $socket.removeListener('leave', handleLeave);
-    };
-
-  }, [id])
-
 
   const handleSendMessage = () => {
     if (id) {
@@ -59,12 +49,14 @@ export const GroupId: FC = () => {
       const userId = parseInt(user, 10);
       const groupId = parseInt(id, 10);
       dispatch(onJoin({ userId, groupId }));
+      setUser('');
     }
   }
 
   const handleOnLeave = () => {
     if (id) {
       dispatch(leave({ groupId: parseInt(id, 10) }));
+      navigate(mainRoutesEnum.MAIN)
     }
   }
 

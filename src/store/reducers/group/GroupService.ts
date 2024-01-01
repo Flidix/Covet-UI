@@ -35,14 +35,14 @@ export const fetchGroups = createAsyncThunk(
     'leave',
     async (payload: { groupId: number }, { dispatch }) => {
       try {
-        dispatch(groupSlice.actions.groupFetching());
+        dispatch(groupsSlice.actions.groupsFetching());
         const userId = localStorage.getItem('userId');
         await $socket.emit('leave', {
           groupId: payload.groupId,
           userId: Number(userId),
         });
       } catch (error) {
-        dispatch(groupSlice.actions.groupFetchingError('error'));
+        dispatch(groupsSlice.actions.groupsFetchingError('error'));
       }
     }
   );

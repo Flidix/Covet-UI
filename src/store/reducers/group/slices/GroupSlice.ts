@@ -2,9 +2,9 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { IGroup } from '../../../../models/group/group'
 import { IMessage } from '../../../../models/message/message'
 import { IUserToGroups } from '../../../../models/group/userToGroups'
+import { ILeaveResponse } from '../../../../models/responses/leaveResponse'
 
 interface GroupState {
-    createUser: IUserToGroups[]
     users: IUserToGroups[]
     createMessage: IMessage[]
     messages: IMessage[]
@@ -14,7 +14,6 @@ interface GroupState {
 }
 
 const initialState: GroupState = {
-    createUser: [],
     users: [],
     createMessage: [],
     messages: [],
@@ -28,19 +27,15 @@ export const groupSlice = createSlice({
     initialState,
     reducers: {
 
-      onLeave(state, action: PayloadAction<{groupId: number, userId: number}>) {
-        state.isLoading = false
-        state.error = ''
-        console.log(state.createUser, state.users, 456789);
-
-        state.createUser = state.createUser.filter((user) =>
-          user.userId !== action.payload.userId && user.groupId !== action.payload.groupId)
-        state.users = state.users.filter((user) => user.userId !== action.payload.userId && user.groupId !== action.payload.groupId)
+      onLeave(state, action: PayloadAction<ILeaveResponse>) {
+        state.isLoading = false;
+        state.error = '';
+        state.users = state.users.filter((user) => !(user.groupId === action.payload.groupId && user.userId === action.payload.userId));
       },
+
       onJoin(state, action: PayloadAction<IUserToGroups>) {
         state.isLoading = false
         state.error = ''
-        state.createUser.push(action.payload)
         state.users.push(action.payload);
       },
       createMessage(state, action: PayloadAction<IMessage>) {
@@ -54,7 +49,6 @@ export const groupSlice = createSlice({
       },
       groupFetchingSuccess(state, action: PayloadAction<IGroup>) {
         state.users = [];
-        state.createUser = [];
         state.group = {} as IGroup;
         state.createMessage = [];
         state.messages = [];
