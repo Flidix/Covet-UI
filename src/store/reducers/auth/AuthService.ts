@@ -32,6 +32,7 @@ export const fetchConfirmAuth = createAsyncThunk('auth/confirmation/user/', asyn
         const response = await $api.get<AuthResponse>('auth/confirmation/user/' + payload.id)
         localStorage.setItem('accessToken', response.data.accessToken)
         localStorage.setItem('refreshToken', response.data.refreshToken)
+        localStorage.setItem('userId', response.data.user.id.toString())
         dispatch(confirmAuthSlice.actions.confirmAuthFetchingSuccess());
     } catch (e) {
         dispatch(confirmAuthSlice.actions.confirmAuthFetchingError('error'));
@@ -50,6 +51,7 @@ export const fetchCheckAuth = createAsyncThunk('auth/access-token', async (_, { 
 
         localStorage.setItem('accessToken', response.data.accessToken);
         localStorage.setItem('refreshToken', response.data.refreshToken);
+
         dispatch(confirmAuthSlice.actions.confirmAuthFetchingSuccess())
 
     } catch (e) {

@@ -31,6 +31,22 @@ export const fetchGroups = createAsyncThunk(
     }
   );
 
+  export const leave = createAsyncThunk(
+    'leave',
+    async (payload: { groupId: number }, { dispatch }) => {
+      try {
+        dispatch(groupSlice.actions.groupFetching());
+        const userId = localStorage.getItem('userId');
+        await $socket.emit('leave', {
+          groupId: payload.groupId,
+          userId: Number(userId),
+        });
+      } catch (error) {
+        dispatch(groupSlice.actions.groupFetchingError('error'));
+      }
+    }
+  );
+
   export const sendMessage = createAsyncThunk(
     'message',
     async (payload: { message: string; groupId: number }, { dispatch }) => {
@@ -46,18 +62,6 @@ export const fetchGroups = createAsyncThunk(
     }
   );
 
-  export const onJoin = createAsyncThunk(
-    'join',
-    async (payload: { userId: number; groupId: number }, { dispatch }) => {
-      try {
-        dispatch(groupSlice.actions.groupFetching());
-        await $socket.emit('join', { userId: payload.userId, groupId: payload.groupId });
-      } catch (error) {
-        dispatch(groupSlice.actions.groupFetchingError('error'));
-      }
-    }
-  );
-
   export const createGroup = createAsyncThunk(
     'create',
     async (name: string, { dispatch }) => {
@@ -66,6 +70,18 @@ export const fetchGroups = createAsyncThunk(
         await $socket.emit('create', { name });
       } catch (error) {
         dispatch(groupsSlice.actions.groupsFetchingError('error'));
+      }
+    }
+  );
+
+  export const onJoin = createAsyncThunk(
+    'join',
+    async (payload: { userId: number; groupId: number }, { dispatch }) => {
+      try {
+        dispatch(groupSlice.actions.groupFetching());
+        await $socket.emit('join', { userId: payload.userId, groupId: payload.groupId });
+      } catch (error) {
+        dispatch(groupSlice.actions.groupFetchingError('error'));
       }
     }
   );
