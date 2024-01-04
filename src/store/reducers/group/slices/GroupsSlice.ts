@@ -44,7 +44,9 @@ export const groupsSlice = createSlice({
     createGroup(state, action: PayloadAction<IUserToGroups>) {
       state.isLoading = false;
       state.error = '';
-      state.groups.unshift(action.payload);
+      if(action.payload.group.userId === Number(localStorage.getItem('userId'))) {
+        state.groups.unshift(action.payload);
+      }
     },
     groupsFetching(state) {
       state.isLoading = true;

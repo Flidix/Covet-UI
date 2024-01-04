@@ -7,6 +7,7 @@ export interface IGroup {
     name: string
     user: IUser
     userId: number
+    groupAvatar?: string
     messages: IMessage[]
     userToGroups: IUserToGroups[]
 }

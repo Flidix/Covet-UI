@@ -5,6 +5,7 @@ import { fetchGroup, leave, onDelete, onJoin, sendMessage } from '../../store/re
 import { $socket } from '../../http';
 import { groupSlice } from '../../store/reducers/group/slices/GroupSlice';
 import { mainRoutesEnum } from '../../utils/routes';
+import './GroupId.css'
 
 export const GroupId: FC = () => {
   const [text, setText] = useState<string>('');
@@ -72,7 +73,11 @@ export const GroupId: FC = () => {
       <div>
         <div>
           {messages && messages ? (
-            messages.map(el => <div key={el.id}>{el.message}</div>)
+            messages.map(el => (
+              <div className={`message-${el.userId === Number(localStorage.getItem('userId'))}`} key={el.id}>
+                {el.message}
+              </div>
+            ))
           ) : (
             <div>Loading...</div>
           )}
@@ -81,11 +86,13 @@ export const GroupId: FC = () => {
         <button onClick={handleSendMessage}>send</button>
       </div>
       <div>
-        {users &&
+        {users && (
           <div style={{ alignItems: 'space-between' }}>
-            {users && users.map(el => <div>{el.user.username}</div>)}
+            {users.map(el => (
+              <div key={el.userId}>{el.user.username}</div>
+            ))}
           </div>
-        }
+        )}
 
         <input value={user} onChange={(e) => setUser(e.target.value)} type="text" />
         <button onClick={handleOnJoin}>send</button>
@@ -95,4 +102,5 @@ export const GroupId: FC = () => {
       </div>
     </div>
   );
+
 };
