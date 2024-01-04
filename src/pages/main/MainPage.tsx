@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { $socket } from '../../http';
 import { groupsSlice } from '../../store/reducers/group/slices/GroupsSlice';
 import { groupSlice } from '../../store/reducers/group/slices/GroupSlice';
+import { ILeaveResponse } from '../../models/responses/leaveResponse';
 
 interface MainPageProps {
   children?: React.ReactNode;
@@ -18,13 +19,11 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
   const [text, setText] = useState<string>('');
 
   useEffect(() => {
-    console.log(localStorage.getItem('userId'));
     dispatch(fetchGroups());
   }, []);
 
   useEffect(() => {
     const handleOnJoin = (data: {group: IUserToGroups}) => {
-      console.log(data);
       dispatch(groupsSlice.actions.joinGroup(data));
 
       dispatch(groupSlice.actions.onJoin(data.group));
@@ -44,6 +43,25 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
       $socket.removeListener('create', handleGroup);
     };
   }, []);
+
+  useEffect(() => {
+    const handleLeave = (data: ILeaveResponse) => {
+      console.log('Handling leave event:', data);
+      dispatch(groupsSlice.actions.onLeave(data));
+      dispatch(groupSlice.actions.onLeave(data));
+    };
+
+    console.log('Adding leave event listener');
+
+    $socket.on('leave', handleLeave);
+
+    return () => {
+      console.log('Removing leave event listener');
+      $socket.removeListener('leave', handleLeave);
+    };
+
+  }, []);
+
 
 
 
