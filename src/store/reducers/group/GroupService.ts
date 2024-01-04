@@ -78,10 +78,26 @@ export const fetchGroups = createAsyncThunk(
 
   export const createGroup = createAsyncThunk(
     'create',
-    async (name: string, { dispatch }) => {
+    async (payload: { name: string; file: any }, { dispatch }) => {
       try {
-        dispatch(groupsSlice.actions.groupsFetching());
-        await $socket.emit('create', { name });
+        const reader = new FileReader();
+        const loadPromise = new Promise<ArrayBuffer>((resolve, reject) => {
+          reader.onload = (e) => {
+            resolve(e.target?.result as ArrayBuffer);
+          };
+          reader.onerror = (e) => {
+            reject(e.target?.error);
+          };
+        });
+
+        reader.readAsArrayBuffer(payload.file);
+        const rawData = await loadPromise;
+
+        $socket.emit('create', {
+          type: 'attachment',
+          name: payload.name,
+          groupAvatar: rawData,
+        });
       } catch (error) {
         dispatch(groupsSlice.actions.groupsFetchingError('error'));
       }

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useAppDispatch, useAppSelector } from './hooks/redux';
 import { fetchCheckAuth } from './store/reducers/auth/AuthService';
-
+import './index.css'
 function App() {
 
   const { isLoading } = useAppSelector(state => state.confirmAuthReducer)
