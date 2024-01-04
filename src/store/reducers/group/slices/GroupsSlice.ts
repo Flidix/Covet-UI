@@ -23,16 +23,19 @@ export const groupsSlice = createSlice({
     onLeave(state, action: PayloadAction<ILeaveResponse>) {
       state.isLoading = false;
       state.error = '';
-
       if (action.payload.userId === Number(localStorage.getItem('userId'))) {
         state.groups = state.groups.filter((group) => group.groupId !== action.payload.groupId);
       }
     },
 
+    onDelete(state, action: PayloadAction<ILeaveResponse>) {
+      state.isLoading = false;
+      state.error = '';
+      state.groups = state.groups.filter((group) => group.groupId !== action.payload.groupId);
+    },
     joinGroup(state, action: PayloadAction<{group: IUserToGroups}>) {
       state.isLoading = false;
       state.error = '';
-      console.log(action.payload.group);
       if(action.payload.group.userId === Number(localStorage.getItem('userId'))) {
         state.groups.unshift(action.payload.group);
       }

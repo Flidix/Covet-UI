@@ -47,6 +47,20 @@ export const fetchGroups = createAsyncThunk(
     }
   );
 
+  export const onDelete = createAsyncThunk(
+    'delete',
+    async (payload: { groupId: number }, { dispatch }) => {
+      try {
+        dispatch(groupsSlice.actions.groupsFetching());
+        await $socket.emit('delete', {
+          groupId: payload.groupId,
+        });
+      } catch (error) {
+        dispatch(groupsSlice.actions.groupsFetchingError('error'));
+      }
+    }
+  );
+
   export const sendMessage = createAsyncThunk(
     'message',
     async (payload: { message: string; groupId: number }, { dispatch }) => {
