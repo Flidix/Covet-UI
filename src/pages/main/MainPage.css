@@ -2,7 +2,6 @@
     width: 100%;
     height: 100vh;
     display: flex;
-    background: #1d1d1d;
     background-size: cover;
     background-position: center;
 }
@@ -45,5 +44,8 @@
 }
 
 .contentGroupId {
-    margin-left: 15%;
+    display: flex;
+    background-color: #1d1d1d;
+    height: 100vh;
+    width: 100%;
 }

@@ -70,6 +70,10 @@ export const GroupId: FC = () => {
 
   return (
     <div className='groupId'>
+      <div className='header'>
+        <img src={group?.groupAvatar} />
+        <div>{group?.name}</div>
+      </div>
       <div className='messages-box'>
         <div className='messages'>
           {messages && messages ? (
@@ -83,8 +87,8 @@ export const GroupId: FC = () => {
           )}
         </div>
         <div className="inputs">
-          <input value={text} onChange={(e) => setText(e.target.value)} type="text" />
           <button onClick={handleSendMessage}>send</button>
+          <input value={text} onChange={(e) => setText(e.target.value)} type="text" />
         </div>
       </div>
       <div>
