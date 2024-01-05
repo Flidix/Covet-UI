@@ -12,6 +12,7 @@
     height: 100%;
     width: 150%;
     background: #e5c200;
+    max-width: 350px;
 }
 
 .groups i {
@@ -29,9 +30,17 @@
     padding: 10px 0 10px 10px;
     border-radius: 10px;
     color: #e5c200;
+    box-shadow: 3px 2px 4px #1d1d1d;
+    cursor: pointer;
+}
+
+.group:hover {
+    background-color: #2a2a2b;
 }
 
 .group img {
     width: 40px;
     height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
 }
