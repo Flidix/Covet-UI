@@ -69,21 +69,23 @@ export const GroupId: FC = () => {
   }
 
   return (
-    <div style={{ display: 'flex' }}>
-      <div>
-        <div>
+    <div className='groupId'>
+      <div className='messages-box'>
+        <div className='messages'>
           {messages && messages ? (
             messages.map(el => (
               <div className={`message-${el.userId === Number(localStorage.getItem('userId'))}`} key={el.id}>
-                {el.message}
+                <p>{el.message}</p>
               </div>
             ))
           ) : (
             <div>Loading...</div>
           )}
         </div>
-        <input value={text} onChange={(e) => setText(e.target.value)} type="text" />
-        <button onClick={handleSendMessage}>send</button>
+        <div className="inputs">
+          <input value={text} onChange={(e) => setText(e.target.value)} type="text" />
+          <button onClick={handleSendMessage}>send</button>
+        </div>
       </div>
       <div>
         {users && (

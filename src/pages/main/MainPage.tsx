@@ -89,7 +89,7 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
           ))}
         </div>
       </div>
-      <div style={{ margin: '40px' }}>{children}</div>
+      <div className='contentGroupId' >{children}</div>
     </div>
   );
 };
