@@ -23,7 +23,7 @@ function App() {
         ? <div></div>
         :
         <BrowserRouter>
-        <AppRouter/>
+          <AppRouter />
         </BrowserRouter>
       }
     </div>
