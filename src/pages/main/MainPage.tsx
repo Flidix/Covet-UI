@@ -78,7 +78,6 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
 
   return (
     <div className='main' style={{ display: 'flex' }}>
-      <div>
         <CreateGroupModal setModal={setModal} isModal={modal} />
         <div className="groups">
           <i onClick={() => setModal(!modal)} className='bx bxs-plus-circle' style={{ color: '#fddf2f' }} ></i>
@@ -88,8 +87,7 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
             </div>
           ))}
         </div>
-      </div>
-      <div className='contentGroupId' >{children}</div>
+        <div className='contentGroupId' >{children}</div>
     </div>
   );
 };
