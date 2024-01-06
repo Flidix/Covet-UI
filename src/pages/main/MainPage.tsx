@@ -26,7 +26,7 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const handleOnJoin = (data: {group: IUserToGroups}) => {
+    const handleOnJoin = (data: { group: IUserToGroups }) => {
       dispatch(groupsSlice.actions.joinGroup(data));
 
       dispatch(groupSlice.actions.onJoin(data.group));
@@ -81,10 +81,10 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
       <div>
         <CreateGroupModal setModal={setModal} isModal={modal} />
         <div className="groups">
-            <i onClick={() => setModal(!modal)} className='bx bxs-plus-circle' style={{ color: '#fddf2f' }} ></i>
-              {groups && groups.map((el: IUserToGroups) => (
+          <i onClick={() => setModal(!modal)} className='bx bxs-plus-circle' style={{ color: '#fddf2f' }} ></i>
+          {groups && groups.map((el: IUserToGroups) => (
             <div className='group' key={el.group.id} onClick={() => navigate('/group/' + el.group.id)}>
-              {el.group.name && el.group.name}{el.group.groupAvatar && <img src={el.group.groupAvatar} />}
+              {el.group.groupAvatar && <img src={el.group.groupAvatar} />}{el.group.name && el.group.name}
             </div>
           ))}
         </div>
