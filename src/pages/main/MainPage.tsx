@@ -78,16 +78,16 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
 
   return (
     <div className='main' style={{ display: 'flex' }}>
-        <CreateGroupModal setModal={setModal} isModal={modal} />
-        <div className="groups">
-          <i onClick={() => setModal(!modal)} className='bx bxs-plus-circle' style={{ color: '#fddf2f' }} ></i>
-          {groups && groups.map((el: IUserToGroups) => (
-            <div className='group' key={el.group.id} onClick={() => navigate('/group/' + el.group.id)}>
-              {el.group.groupAvatar && <img src={el.group.groupAvatar} />}{el.group.name && el.group.name}
-            </div>
-          ))}
-        </div>
-        <div className='contentGroupId' >{children}</div>
+      <CreateGroupModal setModal={setModal} isModal={modal} />
+      <div className="groups">
+        <i onClick={() => setModal(!modal)} className='bx bxs-plus-circle' style={{ color: '#fddf2f' }} ></i>
+        {groups && groups.map((el: IUserToGroups) => (
+          <div className='group' key={el.group.id} onClick={() => navigate('/group/' + el.group.id)}>
+            {el.group.groupAvatar && <img src={el.group.groupAvatar} />}{el.group.name && el.group.name}
+          </div>
+        ))}
+      </div>
+      <div className='contentGroupId' >{children}</div>
     </div>
   );
 };
