@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { fetchGroup, fetchGroups } from '../../store/reducers/group/GroupService';
+import { fetchGroups } from '../../store/reducers/group/GroupService';
 import { IUserToGroups } from '../../models/group/userToGroups';
 import { useNavigate } from 'react-router-dom';
 import { $socket } from '../../http';
@@ -86,6 +86,7 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
       <CreateGroupModal setModal={setModal} isModal={modal} />
       {showGroups ? (
         <div className="groups-fullscreen">
+          <i onClick={() => setModal(!modal)} className='bx bxs-plus-circle' style={{ color: '#fddf2f' }} ></i>
           {groups && groups.map((el: IUserToGroups) => (
             <div className='group' key={el.group.id} onClick={() => handleViewGroupsClick(el.group.id)}>
               {el.group.groupAvatar && <img src={el.group.groupAvatar} />}{el.group.name && el.group.name}
@@ -93,6 +94,7 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
           ))}
         </div>
       ) : (
+        <>
         <div className="groups">
           <i onClick={() => setModal(!modal)} className='bx bxs-plus-circle' style={{ color: '#fddf2f' }} ></i>
           {groups && groups.map((el: IUserToGroups) => (
@@ -101,8 +103,9 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
             </div>
           ))}
         </div>
+        <div className='contentGroupId'>{children}</div>
+        </>
       )}
-      <div className='contentGroupId'>{children}</div>
     </div>
   );
 };

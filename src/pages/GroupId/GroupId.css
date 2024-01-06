@@ -11,14 +11,53 @@
     background: #121212;
     color: #e5c200;
     font-weight: 500;
+    padding: 10px;
     border-radius: 20px;
     margin-top: 18px;
-    padding: 10px;
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: column;
     width: fit-content;
     align-self: flex-start;
     max-width: 50%;
+}
+
+.message-false div {
+    background-color: #e5c200;
+    padding: 10px;
+    color: #1d1d1d;
+    border-radius: 20px;
+    display: flex;
+}
+
+.message-true div {
+    background-color: #1d1d1d;
+    padding: 10px;
+    color: #e5c200;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.message-true .user-info .avatar{
+    margin-left: 10px;
+}
+
+.message-false .user-info .avatar{
+    margin-right: 10px;
+}
+
+.text {
+    padding: 10px;
+}
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
 }
 
 .message-false p {
@@ -28,7 +67,6 @@
 
 .groupId {
     font-family: Inter;
-    width: 50%;
     margin-top: 2%;
     display: flex;
     flex-direction: column;
@@ -88,6 +126,7 @@
 
 .header {
     display: flex;
+    width: 100%;
     align-items: center;
     margin-bottom: 20px;
     background-color: #e5c200;
@@ -107,9 +146,18 @@
     color: #1d1d1d;
 }
 
-.view-groups-button {
+.header i {
     display: none;
 }
+
+
+.content {
+    display: flex;
+}
+
+.info-box {
+}
+
 
 @media (max-width: 768px) {
     .groupId {
@@ -124,10 +172,18 @@
         min-width: 100%;
     }
 
-    .view-groups-button {
+    .header i {
         display: block;
+        font-size: 30px;
+        position: absolute;
+        border-radius: 50%;
+        right: 101%;
+        background-color: #e5c200;
     }
 
+    .header {
+        position: relative;
+    }
     .groups {
         display: none;
     }

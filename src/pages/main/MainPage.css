@@ -17,7 +17,7 @@
     position: absolute;
     top: 87%;
     font-size: 60px;
-    left: 11%;
+    left: 15%;
 }
 
 .group {
@@ -53,10 +53,15 @@
 .groups-fullscreen {
     overflow: auto;
     height: 100%;
-    position: absolute;
-    width: 90%;
+    width: 100%;
+    border-left: 20px solid #1d1d1d;
+    border-right: 20px solid #1d1d1d;
     background: #e5c200;
-    z-index: 999;
-    left: 50%;
-    transform: translateX(-50%);
+}
+
+.groups-fullscreen i {
+    position: absolute;
+    top: 87%;
+    font-size: 60px;
+    left: 11%;
 }
