@@ -9,16 +9,15 @@
 .groups {
     overflow: auto;
     height: 100%;
-    width: 150%;
+    width: 30%;
     background: #e5c200;
-    max-width: 350px;
 }
 
 .groups i {
     position: absolute;
     top: 87%;
     font-size: 60px;
-    left: 11%;
+    left: 15%;
 }
 
 .group {
@@ -46,6 +45,23 @@
 .contentGroupId {
     display: flex;
     background-color: #1d1d1d;
+    justify-content: center;
     height: 100vh;
     width: 100%;
+}
+
+.groups-fullscreen {
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+    border-left: 20px solid #1d1d1d;
+    border-right: 20px solid #1d1d1d;
+    background: #e5c200;
+}
+
+.groups-fullscreen i {
+    position: absolute;
+    top: 87%;
+    font-size: 60px;
+    left: 11%;
 }
