@@ -9,9 +9,8 @@
 .groups {
     overflow: auto;
     height: 100%;
-    width: 150%;
+    width: 30%;
     background: #e5c200;
-    max-width: 350px;
 }
 
 .groups i {
@@ -46,6 +45,18 @@
 .contentGroupId {
     display: flex;
     background-color: #1d1d1d;
+    justify-content: center;
     height: 100vh;
     width: 100%;
+}
+
+.groups-fullscreen {
+    overflow: auto;
+    height: 100%;
+    position: absolute;
+    width: 90%;
+    background: #e5c200;
+    z-index: 999;
+    left: 50%;
+    transform: translateX(-50%);
 }

@@ -5,6 +5,7 @@ import { IUserToGroups } from '../../../../models/group/userToGroups'
 import { ILeaveResponse } from '../../../../models/responses/leaveResponse'
 
 interface GroupState {
+    showGroups: boolean
     users: IUserToGroups[]
     createMessage: IMessage[]
     messages: IMessage[]
@@ -14,6 +15,7 @@ interface GroupState {
 }
 
 const initialState: GroupState = {
+    showGroups: false,
     users: [],
     createMessage: [],
     messages: [],
@@ -26,6 +28,10 @@ export const groupSlice = createSlice({
     name: 'group',
     initialState,
     reducers: {
+
+      showGroups(state) {
+        state.showGroups = !state.showGroups;
+      },
 
       onLeave(state, action: PayloadAction<ILeaveResponse>) {
         state.isLoading = false;
