@@ -1,7 +1,45 @@
 .message-true {
     background: blue;
+    max-width: 50%;
+    align-self: flex-end;
 }
 
 .message-false {
     background: white;
+    display: flex;
+    flex-direction: row-reverse;
+    width: fit-content;
+    align-self: flex-start;
+    max-width: 50%;
+}
+
+.message-false p {
+    direction: ltr;
+    unicode-bidi: bidi-override;
+}
+
+.groupId {
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.messages-box {
+    width: 100%;
+    background-color: red;
+}
+
+.messages {
+    overflow: auto;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    word-wrap: break-word;
+}
+
+.inputs {
+    position: absolute;
+    top: 90%;
 }
