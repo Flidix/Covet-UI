@@ -27,8 +27,8 @@
 }
 
 .groupId {
-    margin-left: 25%;
     font-family: Inter;
+    width: 50%;
     margin-top: 2%;
     display: flex;
     flex-direction: column;
@@ -40,8 +40,8 @@
     background-color: #1d1d1d;
 }
 
-.messages {
-    min-width: 50%;
+.messages { 
+    min-width: 100%;
     overflow: auto;
     max-height: 70vh;
     display: flex;
@@ -53,7 +53,7 @@
 
 .inputs {
     margin-top: 10px;
-    flex-direction:row-reverse;
+    flex-direction: row-reverse;
     position: relative;
     border-radius: 30px;
     border: #121212 5px solid;
@@ -93,6 +93,7 @@
     background-color: #e5c200;
     border-radius: 20px;
 }
+
 .header img {
     width: 40px;
     height: 40px;
@@ -104,4 +105,30 @@
     font-size: 1.4rem;
     font-weight: 500;
     color: #1d1d1d;
+}
+
+.view-groups-button {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .groupId {
+        width: 80%;
+    }
+
+    .messages-box {
+        max-width: 100%;
+    }
+
+    .messages {
+        min-width: 100%;
+    }
+
+    .view-groups-button {
+        display: block;
+    }
+
+    .groups {
+        display: none;
+    }
 }
