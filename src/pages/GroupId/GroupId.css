@@ -74,7 +74,7 @@
 }
 
 .messages-box { 
-    max-width: 40vw;
+    max-width: 50vw;
     background-color: #1d1d1d;
 }
 
@@ -152,11 +152,16 @@
 
 
 .content {
+    position: relative;
     display: flex;
+    width: 100%;
 }
 
 .info-box {
+    display: flex;
+    justify-content: center;
 }
+
 
 
 @media (max-width: 768px) {
@@ -186,5 +191,30 @@
     }
     .groups {
         display: none;
+    }
+}
+
+
+@media (max-width: 1200px) and (min-width: 767px) {
+    .info-box {
+        position: absolute;
+        width: 100%;
+    }
+
+    .group-info-content {
+        margin-left: 0;
+        padding: 0 20%;
+        background-color: #1d1d1d;
+        width: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    .content {
+        display: flex;
+        width: 100%;
+    }
+    .info-box {
+        width: 100%;
     }
 }

@@ -98,9 +98,17 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
         <div className="groups">
           <i onClick={() => setModal(!modal)} className='bx bxs-plus-circle' style={{ color: '#fddf2f' }} ></i>
           {groups && groups.map((el: IUserToGroups) => (
-            <div className='group' key={el.group.id} onClick={() => navigate('/group/' + el.group.id)}>
-              {el.group.groupAvatar && <img src={el.group.groupAvatar} />}{el.group.name && el.group.name}
-            </div>
+            <>
+              {el.group.id === Number(localStorage.getItem('lastGroupId')) ? (
+                <div className='current-group-id' key={el.group.id} onClick={() => handleViewGroupsClick(el.group.id)}>
+                  {el.group.groupAvatar && <img src={el.group.groupAvatar} />}{el.group.name && el.group.name}
+                </div>
+              ) : (
+              <div className='group' key={el.group.id} onClick={() => navigate('/group/' + el.group.id)}>
+                {el.group.groupAvatar && <img src={el.group.groupAvatar} />}{el.group.name && el.group.name}
+              </div>
+              )}
+            </>
           ))}
         </div>
         <div className='contentGroupId'>{children}</div>
