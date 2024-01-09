@@ -17,6 +17,7 @@
     "@types/react-redux": "^7.1.33",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.5.1",
+    "clipboard-copy": "^4.0.1",
     "mobx": "^6.10.2",
     "mobx-react-lite": "^4.0.5",
     "react": "^18.2.0",

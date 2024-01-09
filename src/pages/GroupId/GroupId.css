@@ -11,14 +11,53 @@
     background: #121212;
     color: #e5c200;
     font-weight: 500;
+    padding: 10px;
     border-radius: 20px;
     margin-top: 18px;
-    padding: 10px;
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: column;
     width: fit-content;
     align-self: flex-start;
     max-width: 50%;
+}
+
+.message-false div {
+    background-color: #e5c200;
+    padding: 10px;
+    color: #1d1d1d;
+    border-radius: 20px;
+    display: flex;
+}
+
+.message-true div {
+    background-color: #1d1d1d;
+    padding: 10px;
+    color: #e5c200;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.message-true .user-info .avatar{
+    margin-left: 10px;
+}
+
+.message-false .user-info .avatar{
+    margin-right: 10px;
+}
+
+.text {
+    padding: 10px;
+}
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
 }
 
 .message-false p {
@@ -27,7 +66,6 @@
 }
 
 .groupId {
-    margin-left: 25%;
     font-family: Inter;
     margin-top: 2%;
     display: flex;
@@ -36,12 +74,12 @@
 }
 
 .messages-box { 
-    max-width: 40vw;
+    max-width: 50vw;
     background-color: #1d1d1d;
 }
 
-.messages {
-    min-width: 50%;
+.messages { 
+    min-width: 100%;
     overflow: auto;
     max-height: 70vh;
     display: flex;
@@ -53,7 +91,7 @@
 
 .inputs {
     margin-top: 10px;
-    flex-direction:row-reverse;
+    flex-direction: row-reverse;
     position: relative;
     border-radius: 30px;
     border: #121212 5px solid;
@@ -88,11 +126,13 @@
 
 .header {
     display: flex;
+    width: 80%;
     align-items: center;
     margin-bottom: 20px;
     background-color: #e5c200;
     border-radius: 20px;
 }
+
 .header img {
     width: 40px;
     height: 40px;
@@ -104,4 +144,79 @@
     font-size: 1.4rem;
     font-weight: 500;
     color: #1d1d1d;
+}
+
+.header i {
+    display: none;
+}
+
+
+.content {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+
+.info-box {
+    display: flex;
+    justify-content: center;
+}
+
+
+
+@media (max-width: 768px) {
+    .groupId {
+        width: 80%;
+    }
+
+    .messages-box {
+        max-width: 100%;
+    }
+
+    .messages {
+        min-width: 100%;
+    }
+
+    .header i {
+        display: block;
+        font-size: 30px;
+        position: absolute;
+        border-radius: 50%;
+        right: 101%;
+        background-color: #e5c200;
+    }
+
+    .header {
+        position: relative;
+    }
+    .groups {
+        display: none;
+    }
+}
+
+
+@media (max-width: 1200px) and (min-width: 767px) {
+    .info-box {
+        position: absolute;
+        width: 100%;
+    }
+
+    .group-info-content {
+        margin-top: -1%;
+        margin-left: 0;
+        padding: 0 20%;
+        background-color: #1d1d1d;
+        height: 80vh;
+        width: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    .content {
+        display: flex;
+        width: 100%;
+    }
+    .info-box {
+        width: 100%;
+    }
 }
