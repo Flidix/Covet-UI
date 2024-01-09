@@ -9,6 +9,7 @@ import { groupSlice } from '../../store/reducers/group/slices/GroupSlice';
 import { ILeaveResponse } from '../../models/responses/leaveResponse';
 import './MainPage.css';
 import { CreateGroupModal } from '../../components/UI/CreateGroupModal/CreateGroupModal';
+import { mainRoutesEnum } from '../../utils/routes';
 
 interface MainPageProps {
   children?: React.ReactNode;
@@ -83,6 +84,9 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
 
   return (
     <div className='main' style={{ display: 'flex' }}>
+      <div className='settings' onClick={() => navigate({ pathname: mainRoutesEnum.SETTING })}>
+        <i className='bx bx-cog' style={{ color: '#e5c200' }} ></i>
+      </div>
       <CreateGroupModal setModal={setModal} isModal={modal} />
       {showGroups ? (
         <div className="groups-fullscreen">

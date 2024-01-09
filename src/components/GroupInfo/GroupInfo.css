@@ -34,14 +34,38 @@
     margin-top: 5px;
 }
 
+.email-box i {
+    position: absolute;
+    right: 5%;
+    margin-top: 5px;
+}
+
+.user-name-box i {
+    position: absolute;
+    right: 5%;
+    margin-top: 5px;
+}
 .email, .user-name {
     background: #e5c200 !important;
     border-radius: 20px;
-    max-width: 100%;
     margin-top: 10px;
+    max-width: 87%;
     white-space: nowrap; 
     overflow: hidden; 
     text-overflow: ellipsis;
+}
+
+
+.email-box {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.user-name-box {
+    display: flex;
+    align-items: center;
+    position: relative;
 }
 
 .user-info-input input {
@@ -83,15 +107,14 @@
         width: 50%;
     }
     .group-info-content {
-        margin-left: 0%;
+        margin-top: -1%;
         display: flex;
         justify-content: center;
         position: absolute !important;  
-        width: 100% !important;
-        height: 100% !important;
+        min-width: 110%;
+        height: 110% !important;
         background-color: #1d1d1d;
         left: 0;
-        margin-left: 0;
+        margin-left: -5%;
     }
 }
-

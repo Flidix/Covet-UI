@@ -126,7 +126,7 @@
 
 .header {
     display: flex;
-    width: 100%;
+    width: 80%;
     align-items: center;
     margin-bottom: 20px;
     background-color: #e5c200;
@@ -202,9 +202,11 @@
     }
 
     .group-info-content {
+        margin-top: -1%;
         margin-left: 0;
         padding: 0 20%;
         background-color: #1d1d1d;
+        height: 80vh;
         width: 100%;
     }
 }

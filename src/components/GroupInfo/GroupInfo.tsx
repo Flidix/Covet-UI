@@ -16,8 +16,8 @@ const GroupInfo: FC<Props> = ({ hidden }) => {
     const navigate = useNavigate();
     const { users, group } = useAppSelector(state => state.groupReducer);
 
-    const [text, setText] = useState('');
-    const [copied, setCopied] = useState(false);
+    const [copiedUserId, setCopiedUserId] = useState<number | null>(null);
+    const [copiedField, setCopiedField] = useState<string | null>(null);
 
     const handleOnJoin = () => {
         if (id) {
@@ -42,17 +42,20 @@ const GroupInfo: FC<Props> = ({ hidden }) => {
         }
     };
 
-    const handleCopyText = (textToCopy: string) => {
+    const handleCopyText = (textToCopy: string, userId: number, field: string) => {
         navigator.clipboard.writeText(textToCopy);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
+        setCopiedUserId(userId);
+        setCopiedField(field);
+        setTimeout(() => {
+            setCopiedUserId(null);
+            setCopiedField(null);
+        }, 2000);
     };
 
     return (
         <>
             {hidden && (
                 <div className='group-info-content'>
-                    <div style={{ color: copied ? 'green' : 'red' }}>{`${copied}`}</div>
                     <div className="group-info">
                         <div className='users-info'>
                             {users && (
@@ -61,8 +64,14 @@ const GroupInfo: FC<Props> = ({ hidden }) => {
                                         <div className='user' key={el.userId}>
                                             <img src={el.user.userAvatar} className="avatar" alt="User Avatar" />
                                             <div>
-                                                <div onClick={() => handleCopyText(el.user.email)} className='email'>{el.user.email}</div>
-                                                <div onClick={() => handleCopyText(el.user.username)} className='user-name'>{el.user.username}</div>
+                                                <div className={`email-box ${copiedUserId === el.userId && copiedField === 'email' ? 'copied' : ''}`} onClick={() => handleCopyText(el.user.email, el.userId, 'email')}>
+                                                    <i className={`bx bx-${copiedUserId === el.userId && copiedField === 'email' ? 'check' : 'copy'}`} style={{ color:'#e5c200' }}></i>
+                                                    <div className='email'>{el.user.email}</div>
+                                                </div>
+                                                <div className={`user-name-box ${copiedUserId === el.userId && copiedField === 'username' ? 'copied' : ''}`} onClick={() => handleCopyText(el.user.username, el.userId, 'username')}>
+                                                    <i className={`bx bx-${copiedUserId === el.userId && copiedField === 'username' ? 'check' : 'copy'}`} style={{ color:'#e5c200' }}></i>
+                                                    <div className='user-name'>{el.user.username}</div>
+                                                </div>
                                             </div>
                                         </div>
                                     ))}

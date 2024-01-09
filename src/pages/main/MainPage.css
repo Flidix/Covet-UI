@@ -84,3 +84,18 @@
     font-size: 60px;
     left: 11%;
 }
+
+.settings {
+    position: absolute;
+    left: 90%;
+    top: 2%;
+    font-size: 40px;
+}
+
+@media (max-width: 768px) {
+    .settings {
+        top: 1.6%;
+        left: 91.5%;
+        font-size: 30px;
+    }
+}
