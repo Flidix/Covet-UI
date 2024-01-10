@@ -1,0 +1,120 @@
+.users-info {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.group-info {
+    margin-bottom: 20px;
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden; 
+}
+
+.user {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    width: 100%;
+    align-items: center;
+    background-color: #e5c200;
+    padding: 5px;
+    border-radius: 20px;
+}
+
+.user img {
+    margin-bottom: 5px;
+}
+
+.user div {
+    background-color: #1b1b1b;
+    padding: 5px;
+    width: 100%;
+    border-radius: 20px;
+    margin-top: 5px;
+}
+
+.email-box i {
+    position: absolute;
+    right: 5%;
+    margin-top: 5px;
+}
+
+.user-name-box i {
+    position: absolute;
+    right: 5%;
+    margin-top: 5px;
+}
+.email, .user-name {
+    background: #e5c200 !important;
+    border-radius: 20px;
+    margin-top: 10px;
+    max-width: 87%;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+
+
+.email-box {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.user-name-box {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.user-info-input input {
+    background-color: #e5c200;
+    height: 4vh;
+    border-radius: 20px;
+    width: 100%;
+}
+
+.user-info-input {
+    border-radius: 20px;
+    border: #121212 3px solid;
+    position: relative;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.user-info-input button {
+    color: #e5c200;
+    font-size: medium;
+    font-weight: 700;
+    position: absolute;
+    right: 0;
+    width: 20%;
+    background-color: #1d1d1d;
+    border-radius: 20px;
+    height: 100%;
+    padding: 5px;
+    margin-right: -2px;
+}
+
+.group-info-content {
+    margin-left: 20%;
+}
+
+
+@media (max-width: 767px) {
+    .group-info {
+        width: 50%;
+    }
+    .group-info-content {
+        margin-top: -1%;
+        display: flex;
+        justify-content: center;
+        position: absolute !important;  
+        min-width: 110%;
+        height: 110% !important;
+        background-color: #1d1d1d;
+        left: 0;
+        margin-left: -5%;
+    }
+}
