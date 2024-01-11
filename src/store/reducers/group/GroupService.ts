@@ -3,7 +3,7 @@ import $api, { $socket } from '../../../http';
 import { groupsSlice } from './slices/GroupsSlice';
 import { IUserToGroups } from '../../../models/group/userToGroups';
 import { IGroup } from '../../../models/group/group';
-import { groupSlice } from './slices/GroupSlice';
+import { groupSlice, onTypingInterface } from './slices/GroupSlice';
 
 export const fetchGroups = createAsyncThunk(
     'group/my-groups',
@@ -110,6 +110,30 @@ export const fetchGroups = createAsyncThunk(
       try {
         dispatch(groupSlice.actions.groupFetching());
         await $socket.emit('join', { userId: payload.userId, groupId: payload.groupId });
+      } catch (error) {
+        dispatch(groupSlice.actions.groupFetchingError('error'));
+      }
+    }
+  );
+
+  let typingTimeoutId: NodeJS.Timeout | null = null;
+
+  export const onTyping = createAsyncThunk(
+    'typing',
+    async (payload: { groupId: number }, { dispatch }) => {
+      try {
+        dispatch(groupSlice.actions.groupFetching());
+
+        await $socket.emit('typing', { isTyping: true, groupId: payload.groupId });
+
+        if (typingTimeoutId) {
+          clearTimeout(typingTimeoutId);
+        }
+
+        typingTimeoutId = setTimeout(() => {
+          $socket.emit('typing', { isTyping: false, groupId: payload.groupId });
+          typingTimeoutId = null;
+        }, 2000);
       } catch (error) {
         dispatch(groupSlice.actions.groupFetchingError('error'));
       }

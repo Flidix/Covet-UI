@@ -3,8 +3,18 @@ import { IGroup } from '../../../../models/group/group'
 import { IMessage } from '../../../../models/message/message'
 import { IUserToGroups } from '../../../../models/group/userToGroups'
 import { ILeaveResponse } from '../../../../models/responses/leaveResponse'
+import { IUser } from '../../../../models/user/user'
+
+export interface onTypingInterface {
+  userId?: number
+  isTyping: boolean
+  groupId: number
+  user?: IUser
+}
+
 
 interface GroupState {
+    isTyping: onTypingInterface[]
     showGroupInfo: boolean
     showGroups: boolean
     users: IUserToGroups[]
@@ -16,6 +26,7 @@ interface GroupState {
 }
 
 const initialState: GroupState = {
+    isTyping: [],
     showGroupInfo: false,
     showGroups: false,
     users: [],
@@ -30,6 +41,38 @@ export const groupSlice = createSlice({
     name: 'group',
     initialState,
     reducers: {
+
+      onNoTyping(state, action: PayloadAction<onTypingInterface>) {
+        console.log(action.payload);
+
+        state.isTyping = state.isTyping.map((item: onTypingInterface) =>
+          item.groupId === action.payload.groupId && item.userId === action.payload.userId && item.isTyping
+            ? { ...item, isTyping: false }
+            : item
+        );
+      },
+
+
+      onTyping(state, action: PayloadAction<onTypingInterface>) {
+
+        if(!action.payload.isTyping){
+          const check = state.isTyping.find((item) => item.groupId === action.payload.groupId && item.user?.id === action.payload.user?.id);
+          if (check) {
+            check.isTyping = false
+            state.isTyping = state.isTyping.filter(
+              (item) =>item.userId !== action.payload.userId
+            );
+          }
+        }
+
+        if(action.payload.isTyping){
+          const check = state.isTyping.find((item) => item.groupId === action.payload.groupId && item.user?.id === action.payload.user?.id);
+
+          if (!check) {
+            state.isTyping = [...state.isTyping, action.payload];
+          }
+        }
+      },
 
       showGroupInfo(state) {
         state.showGroupInfo = !state.showGroupInfo;
