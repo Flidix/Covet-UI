@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { fetchGroup, fetchGroups } from '../../store/reducers/group/GroupService';
+import { fetchGroups } from '../../store/reducers/group/GroupService';
 import { IUserToGroups } from '../../models/group/userToGroups';
 import { useNavigate } from 'react-router-dom';
 import { $socket } from '../../http';
@@ -9,6 +9,7 @@ import { groupSlice } from '../../store/reducers/group/slices/GroupSlice';
 import { ILeaveResponse } from '../../models/responses/leaveResponse';
 import './MainPage.css';
 import { CreateGroupModal } from '../../components/UI/CreateGroupModal/CreateGroupModal';
+import { mainRoutesEnum } from '../../utils/routes';
 
 interface MainPageProps {
   children?: React.ReactNode;
@@ -83,9 +84,13 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
 
   return (
     <div className='main' style={{ display: 'flex' }}>
+      <div className='settings' onClick={() => navigate({ pathname: mainRoutesEnum.SETTING })}>
+        <i className='bx bx-cog' style={{ color: '#e5c200' }} ></i>
+      </div>
       <CreateGroupModal setModal={setModal} isModal={modal} />
       {showGroups ? (
         <div className="groups-fullscreen">
+          <i onClick={() => setModal(!modal)} className='bx bxs-plus-circle' style={{ color: '#fddf2f' }} ></i>
           {groups && groups.map((el: IUserToGroups) => (
             <div className='group' key={el.group.id} onClick={() => handleViewGroupsClick(el.group.id)}>
               {el.group.groupAvatar && <img src={el.group.groupAvatar} />}{el.group.name && el.group.name}
@@ -93,16 +98,26 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
           ))}
         </div>
       ) : (
+        <>
         <div className="groups">
           <i onClick={() => setModal(!modal)} className='bx bxs-plus-circle' style={{ color: '#fddf2f' }} ></i>
           {groups && groups.map((el: IUserToGroups) => (
-            <div className='group' key={el.group.id} onClick={() => navigate('/group/' + el.group.id)}>
-              {el.group.groupAvatar && <img src={el.group.groupAvatar} />}{el.group.name && el.group.name}
-            </div>
+            <>
+              {el.group.id === Number(localStorage.getItem('lastGroupId')) ? (
+                <div className='current-group-id' key={el.group.id} onClick={() => handleViewGroupsClick(el.group.id)}>
+                  {el.group.groupAvatar && <img src={el.group.groupAvatar} />}{el.group.name && el.group.name}
+                </div>
+              ) : (
+              <div className='group' key={el.group.id} onClick={() => navigate('/group/' + el.group.id)}>
+                {el.group.groupAvatar && <img src={el.group.groupAvatar} />}{el.group.name && el.group.name}
+              </div>
+              )}
+            </>
           ))}
         </div>
+        <div className='contentGroupId'>{children}</div>
+        </>
       )}
-      <div className='contentGroupId'>{children}</div>
     </div>
   );
 };

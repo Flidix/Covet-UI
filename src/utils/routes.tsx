@@ -1,4 +1,5 @@
 import { GroupId } from '../pages/GroupId/GroupId';
+import { SettingPage } from '../pages/Setting/SettingPage';
 import ConfirmUserPage from '../pages/auth/ConfirmUserPage';
 import LoginPage from '../pages/auth/login/LoginPage';
 import RegisterPage from '../pages/auth/register/RegisterPage';
@@ -13,6 +14,7 @@ export enum authRoutesEnum {
   export enum mainRoutesEnum {
     MAIN = 'main',
     GROUP_ID = 'group/:id',
+    SETTING = '/setting',
   }
 
   export const publicRoutes = [
@@ -45,5 +47,11 @@ export const  privateRoutes = [
         </MainPage>
       ),
     },
+    {
+      path: mainRoutesEnum.SETTING,
+      Component: (
+        <SettingPage/>
+      )
+    }
   ];
 

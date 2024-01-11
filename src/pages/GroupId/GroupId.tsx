@@ -1,22 +1,24 @@
-import { FC, useEffect, useState, useRef } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { fetchGroup, leave, onDelete, onJoin, sendMessage } from '../../store/reducers/group/GroupService';
+import { fetchGroup, onTyping, sendMessage } from '../../store/reducers/group/GroupService';
 import { $socket } from '../../http';
-import { groupSlice } from '../../store/reducers/group/slices/GroupSlice';
-import { mainRoutesEnum } from '../../utils/routes';
-import './GroupId.css';
+import { groupSlice, onTypingInterface } from '../../store/reducers/group/slices/GroupSlice';
+import GroupInfo from '../../components/GroupInfo/GroupInfo';
+import './GroupId.css'
 
 export const GroupId: FC = () => {
   const [text, setText] = useState<string>('');
-  const [user, setUser] = useState<string>('');
+  const [groupInfo, setGroupInfo] = useState(false)
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
-  const { messages, users, group } = useAppSelector(state => state.groupReducer);
+  const { messages, group, isTyping } = useAppSelector(state => state.groupReducer);
 
   const handleViewGroupsClick = () => {
+    navigate('/main')
     dispatch(groupSlice.actions.showGroups())
   };
 
@@ -42,6 +44,23 @@ export const GroupId: FC = () => {
     };
   }, [id, messages]);
 
+  useEffect(() => {
+      if (id) {
+        dispatch(onTyping({ groupId: parseInt(id, 10) }));
+      }
+      const handleOnTyping = (data: onTypingInterface) => {
+          if (data.user?.id !== Number(localStorage.getItem('userId'))) {
+            dispatch(groupSlice.actions.onTyping({ ...data }));
+          }
+      }
+
+      $socket.on('typing', handleOnTyping);
+
+      return () => {
+        $socket.removeListener('typing');
+      };
+  }, [text]);
+
   const scrollToBottom = () => {
     if (messagesRef.current) {
       messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
@@ -56,69 +75,45 @@ export const GroupId: FC = () => {
     }
   };
 
-  const handleOnJoin = () => {
-    if (id) {
-      const userId = parseInt(user, 10);
-      const groupId = parseInt(id, 10);
-      dispatch(onJoin({ userId, groupId }));
-      setUser('');
-    }
-  }
-
-  const handleOnLeave = () => {
-    if (id) {
-      dispatch(leave({ groupId: parseInt(id, 10) }));
-      navigate(mainRoutesEnum.MAIN);
-    }
-  }
-
-  const handleOnDelete = () => {
-    if (id) {
-      dispatch(onDelete({ groupId: parseInt(id, 10) }));
-      navigate(mainRoutesEnum.MAIN);
-    }
-  }
-
   return (
     <div className='groupId'>
-      <div className='header'>
-        <button className="view-groups-button" onClick={handleViewGroupsClick}>
-          View Groups
-        </button>
-        <img src={group?.groupAvatar} alt="Group Avatar" />
+      <div onClick={() => setGroupInfo(!groupInfo)} className='header'>
+        {isTyping.map((item: onTypingInterface) => (
+          <div key={item.user?.id}>
+            {item.isTyping && id && item.groupId === parseInt(id, 10) && (
+              <div>{item.user?.username} is typing...</div>
+            )}
+          </div>
+        ))}
+        <i className='bx bx-left-arrow-alt' style={{ color: '#1b1b1b' }} onClick={handleViewGroupsClick} ></i>
+        <img src={group?.groupAvatar} />
         <div>{group?.name}</div>
       </div>
-      <div className='messages-box'>
-        <div className='messages' ref={messagesRef}>
-          {messages && messages ? (
-            messages.map(el => (
-              <div className={`message-${el.userId === Number(localStorage.getItem('userId'))}`} key={el.id}>
-                <p>{el.message}</p>
-              </div>
-            ))
-          ) : (
-            <div>Loading...</div>
-          )}
+      <div className='content'>
+        <div className='messages-box'>
+            <div className='messages' ref={messagesRef}>
+            {messages && messages ? (
+                messages.map(el => (
+                <div className={`message-${el.userId === Number(localStorage.getItem('userId'))}`} key={el.id}>
+                    <div className='user-info'>
+                        <img src={el.user.userAvatar} className='avatar'/>
+                        <div className='username'>{el.user.username}</div>
+                    </div>
+                    <p className='text'>{el.message}</p>
+                </div>
+                ))
+            ) : (
+                <div>Loading...</div>
+            )}
+            </div>
+            <div className="inputs">
+            <button onClick={handleSendMessage}>send</button>
+            <input value={text} onChange={(e) => setText(e.target.value)} type="text" />
+            </div>
         </div>
-        <div className="inputs">
-          <button onClick={handleSendMessage}>send</button>
-          <input value={text} onChange={(e) => setText(e.target.value)} type="text" />
+        <div className='info-box'>
+            <GroupInfo hidden={groupInfo} />
         </div>
-      </div>
-      <div>
-        {users && (
-          <div style={{ alignItems: 'space-between' }}>
-            {users.map(el => (
-              <div key={el.userId}>{el.user.username}</div>
-            ))}
-          </div>
-        )}
-
-        <input value={user} onChange={(e) => setUser(e.target.value)} type="text" />
-        <button onClick={handleOnJoin}>send</button>
-
-        {id && <button onClick={handleOnLeave}>leave</button>}
-        {group.userId === Number(localStorage.getItem('userId')) && <button onClick={handleOnDelete}>delete</button>}
       </div>
     </div>
   );

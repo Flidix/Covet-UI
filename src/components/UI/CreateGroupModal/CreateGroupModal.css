@@ -1,13 +1,12 @@
 .modal-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 9999; 
 }
 
 .modal {
@@ -23,6 +22,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 10000;
 }
 
 .createGroupName {
