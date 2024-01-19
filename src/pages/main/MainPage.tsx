@@ -66,21 +66,20 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
 
   useEffect(() => {
     const handleDelete = (data: ILeaveResponse) => {
-      console.log(data);
       dispatch(groupsSlice.actions.onDelete(data));
     };
 
-    $socket.on('delete', handleDelete);
+    $socket.on('onDelete', handleDelete);
 
     return () => {
-      $socket.removeListener('delete', handleDelete);
+      $socket.removeListener('onDelete', handleDelete);
     };
   }, []);
 
   const handleViewGroupsClick = (id: number) => {
-    navigate('/group/' + id)
-    dispatch(groupSlice.actions.showGroups())
-  }
+    navigate('/group/' + id);
+    dispatch(groupSlice.actions.showGroups());
+  };
 
   return (
     <div className='main' style={{ display: 'flex' }}>
@@ -99,23 +98,23 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
         </div>
       ) : (
         <>
-        <div className="groups">
-          <i onClick={() => setModal(!modal)} className='bx bxs-plus-circle' style={{ color: '#fddf2f' }} ></i>
-          {groups && groups.map((el: IUserToGroups) => (
-            <>
-              {el.group.id === Number(localStorage.getItem('lastGroupId')) ? (
-                <div className='current-group-id' key={el.group.id} onClick={() => handleViewGroupsClick(el.group.id)}>
-                  {el.group.groupAvatar && <img src={el.group.groupAvatar} />}{el.group.name && el.group.name}
-                </div>
-              ) : (
-              <div className='group' key={el.group.id} onClick={() => navigate('/group/' + el.group.id)}>
-                {el.group.groupAvatar && <img src={el.group.groupAvatar} />}{el.group.name && el.group.name}
-              </div>
-              )}
-            </>
-          ))}
-        </div>
-        <div className='contentGroupId'>{children}</div>
+          <div className="groups">
+            <i onClick={() => setModal(!modal)} className='bx bxs-plus-circle' style={{ color: '#fddf2f' }} ></i>
+            {groups && groups.map((el: IUserToGroups) => (
+              <>
+                {el.group.id === Number(localStorage.getItem('lastGroupId')) ? (
+                  <div className='current-group-id' key={el.group.id} onClick={() => handleViewGroupsClick(el.group.id)}>
+                    {el.group.groupAvatar && <img src={el.group.groupAvatar} />}{el.group.name && el.group.name}
+                  </div>
+                ) : (
+                  <div className='group' key={el.group.id} onClick={() => navigate('/group/' + el.group.id)}>
+                    {el.group.groupAvatar && <img src={el.group.groupAvatar} />}{el.group.name && el.group.name}
+                  </div>
+                )}
+              </>
+            ))}
+          </div>
+          <div className='contentGroupId'>{children}</div>
         </>
       )}
     </div>

@@ -11,47 +11,47 @@ export enum authRoutesEnum {
     CONFIRM = 'confirm/user/:id',
   }
 
-  export enum mainRoutesEnum {
+export enum mainRoutesEnum {
     MAIN = 'main',
     GROUP_ID = 'group/:id',
     SETTING = '/setting',
   }
 
-  export const publicRoutes = [
-    {
-      path: authRoutesEnum.LOGIN,
-      exact: true,
-      Component: <LoginPage/>,
-    },
-    {
-      path: authRoutesEnum.REGISTER,
-      exact: true,
-      Component: <RegisterPage/>,
-    },
-    {
-      path: authRoutesEnum.CONFIRM,
-      Component: <ConfirmUserPage/>,
-    },
-  ];
+export const publicRoutes = [
+  {
+    path: authRoutesEnum.LOGIN,
+    exact: true,
+    Component: <LoginPage/>,
+  },
+  {
+    path: authRoutesEnum.REGISTER,
+    exact: true,
+    Component: <RegisterPage/>,
+  },
+  {
+    path: authRoutesEnum.CONFIRM,
+    Component: <ConfirmUserPage/>,
+  },
+];
 
 export const  privateRoutes = [
-    {
-      path: mainRoutesEnum.MAIN,
-      Component: <MainPage/>,
-    },
-    {
-      path: mainRoutesEnum.GROUP_ID,
-      Component: (
-        <MainPage>
-          <GroupId/>
-        </MainPage>
-      ),
-    },
-    {
-      path: mainRoutesEnum.SETTING,
-      Component: (
-        <SettingPage/>
-      )
-    }
-  ];
+  {
+    path: mainRoutesEnum.MAIN,
+    Component: <MainPage/>,
+  },
+  {
+    path: mainRoutesEnum.GROUP_ID,
+    Component: (
+      <MainPage>
+        <GroupId/>
+      </MainPage>
+    ),
+  },
+  {
+    path: mainRoutesEnum.SETTING,
+    Component: (
+      <SettingPage/>
+    )
+  }
+];
 
