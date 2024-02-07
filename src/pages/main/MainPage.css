@@ -7,18 +7,18 @@
 }
 
 .groups {
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     height: 100%;
-    width: 150%;
+    width: 30%;
     background: #e5c200;
-    max-width: 350px;
 }
 
 .groups i {
     position: absolute;
     top: 87%;
     font-size: 60px;
-    left: 11%;
+    left: 15%;
 }
 
 .group {
@@ -31,6 +31,24 @@
     color: #e5c200;
     box-shadow: 3px 2px 4px #1d1d1d;
     cursor: pointer;
+}
+
+.current-group-id {
+    font-family: Inter;
+    font-weight: 400;
+    margin: 10px 10px 10px 10px;
+    background-color: #343434;
+    padding: 10px 0 10px 10px;
+    border-radius: 10px;
+    color: #e5c200;
+    box-shadow: 3px 2px 4px #1d1d1d;
+    cursor: pointer;
+}
+
+.current-group-id img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 }
 
 .group:hover {
@@ -46,6 +64,7 @@
 .contentGroupId {
     display: flex;
     background-color: #1d1d1d;
+    justify-content: center;
     height: 100vh;
     width: 100%;
     cursor: pointer;
