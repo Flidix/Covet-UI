@@ -61,7 +61,9 @@ export const groupsSlice = createSlice({
 
     paginateGroups(state, action: PayloadAction<IUserToGroups[]>) {
       state.groups = [ ...state.groups, ...action.payload];
-      state.hasMore = action.payload.length < 10;
+      console.log(action.payload);
+
+      state.hasMore = action.payload.length !== 5;
       state.isLoading = false;
       state.error = '';
     },

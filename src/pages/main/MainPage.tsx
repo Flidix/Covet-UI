@@ -23,7 +23,7 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
 
   const observer = useRef<IntersectionObserver | null>(null);
 
-  const [page , setPage] = useState<number>(1);
+  const [page , setPage] = useState<number>(2);
 
 
   const lastGroup = useCallback((node) => {
@@ -31,8 +31,10 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && !hasMore) {
-        setPage(prev => prev + 1);
-        dispatch(fetchPaginateGroups({ page, pageSize: 10 }));
+        console.log(hasMore);
+
+        dispatch(fetchPaginateGroups({ page: page + 1, pageSize: 5 }));
+        setPage(page + 1);
       }
     });
     if (node) observer.current.observe(node);
@@ -42,7 +44,7 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
   useEffect(() => {
     dispatch(fetchGroups());
     navigate('/group/' + localStorage.getItem('lastGroupId'));
-  }, [dispatch, navigate]);
+  }, []);
 
 
   useEffect(() => {
@@ -72,7 +74,7 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
         <div className="groups-fullscreen">
           <i onClick={() => setModal(!modal)} className='bx bxs-plus-circle' style={{ color: '#fddf2f' }} ></i>
           {groups && groups.map((el: IUserToGroups, index: number) => {
-            if(groups.length === index + 1) {
+            if (index === groups.length - 1) {
               return <div className='group' ref={lastGroup} key={el.group.id} onClick={() => handleViewGroupsClick(el.group.id)}>
                 {el.group.groupAvatar && <img src={el.group.groupAvatar} />}{el.group.name && el.group.name}
               </div>;
@@ -88,6 +90,7 @@ const MainPage: FC<MainPageProps> = ({ children }) => {
           <div className="groups">
             <i onClick={() => setModal(!modal)} className='bx bxs-plus-circle' style={{ color: '#fddf2f' }} ></i>
             {groups && groups.map((el: IUserToGroups, index: number) => {
+
               if(groups.length === index + 1){
                 return <div ref={lastGroup}>
                   {el.group.id === Number(localStorage.getItem('lastGroupId')) ? (
