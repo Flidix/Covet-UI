@@ -5,11 +5,13 @@ import { ILeaveResponse } from '../../../../models/responses/leaveResponse';
 interface GroupsState {
   createUser: IUserToGroups[];
   groups: IUserToGroups[];
+  hasMore: boolean;
   isLoading: boolean;
   error: string;
 }
 
 const initialState: GroupsState = {
+  hasMore: false,
   createUser: [],
   groups: [],
   isLoading: false,
@@ -52,7 +54,14 @@ export const groupsSlice = createSlice({
       state.isLoading = true;
     },
     groupsFetchingSuccess(state, action: PayloadAction<IUserToGroups[]>) {
-      state.groups = action.payload.reverse();
+      state.groups = action.payload;
+      state.isLoading = false;
+      state.error = '';
+    },
+
+    paginateGroups(state, action: PayloadAction<IUserToGroups[]>) {
+      state.groups = [ ...state.groups, ...action.payload];
+      state.hasMore = action.payload.length < 10;
       state.isLoading = false;
       state.error = '';
     },

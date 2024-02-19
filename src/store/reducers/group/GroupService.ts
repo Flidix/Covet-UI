@@ -18,6 +18,33 @@ export const fetchGroups = createAsyncThunk(
   }
 );
 
+interface FetchGroupsParams {
+  page?: number;
+  pageSize?: number;
+}
+
+export const fetchPaginateGroups = createAsyncThunk(
+  'group/paginate',
+  async ({ page, pageSize }: FetchGroupsParams, { dispatch }) => {
+    try {
+      dispatch(groupsSlice.actions.groupsFetching());
+
+      const params = new URLSearchParams();
+      if (page !== undefined) params.append('page', String(page));
+      if (pageSize !== undefined) params.append('pageSize', String(pageSize));
+
+      const url = `group/my-groups?${params.toString()}`;
+
+      const response = await $api.get<IUserToGroups[]>(url);
+
+      dispatch(groupsSlice.actions.paginateGroups(response.data));
+    } catch (e) {
+      dispatch(groupsSlice.actions.groupsFetchingError('error'));
+    }
+  }
+);
+
+
 
 interface FetchGroupParams {
   id: string;

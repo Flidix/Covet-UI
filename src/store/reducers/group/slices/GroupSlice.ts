@@ -124,7 +124,7 @@ export const groupSlice = createSlice({
       state.isLoading = false;
       state.error = '';
       state.messages = [ ...action.payload, ...state.messages];
-      state.hasMoreMessages = action.payload.length > 0;
+      state.hasMoreMessages = action.payload.length <= 10;
     },
 
     newGroupMessage(state) {

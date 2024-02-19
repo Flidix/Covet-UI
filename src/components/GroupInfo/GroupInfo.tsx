@@ -1,9 +1,14 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import './GroupInfo.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { leave, onDelete, onJoin } from '../../store/reducers/group/GroupService';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { mainRoutesEnum } from '../../utils/routes';
+import { $socket } from '../../http';
+import { ILeaveResponse } from '../../models/responses/leaveResponse';
+import { groupSlice } from '../../store/reducers/group/slices/GroupSlice';
+import { groupsSlice } from '../../store/reducers/group/slices/GroupsSlice';
+import { IUserToGroups } from '../../models/group/userToGroups';
 
 interface Props {
     hidden: boolean;
@@ -27,6 +32,45 @@ const GroupInfo: FC<Props> = ({ hidden }) => {
       setUser('');
     }
   };
+
+  useEffect(() => {
+    const handleLeave = (data: ILeaveResponse) => {
+      navigate(-1);
+      dispatch(groupsSlice.actions.onLeave(data));
+      dispatch(groupSlice.actions.onLeave(data));
+    };
+
+    $socket.on('leave', handleLeave);
+
+    return () => {
+      $socket.removeListener('leave', handleLeave);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleDelete = (data: ILeaveResponse) => {
+      navigate(-1);
+      dispatch(groupsSlice.actions.onDelete(data));
+    };
+
+    $socket.on('onDelete', handleDelete);
+
+    return () => {
+      $socket.removeListener('onDelete', handleDelete);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleOnJoin = (data: { group: IUserToGroups }) => {
+      dispatch(groupsSlice.actions.joinGroup(data));
+      dispatch(groupSlice.actions.onJoin(data.group));
+    };
+
+    $socket.on('join', handleOnJoin);
+    return () => {
+      $socket.removeListener('join', handleOnJoin);
+    };
+  }, []);
 
   const handleOnLeave = () => {
     if (id) {
